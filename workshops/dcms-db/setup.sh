@@ -148,19 +148,7 @@ done
 
 # Check "Always Free Autonomous Transaction Processing Instance Count" limit
 while ! state_done ATP_LIMIT_CHECK; do
-  CHECK=1
-  # ADB Always Free availability
-  if test $(oci limits resource-availability get --compartment-id="$(state_get TENANCY_OCID)" --service-name "database" --limit-name "adb-free-count" --query 'to_string(min([data."fractional-availability",`1.0`]))' --raw-output) != '1.0'; then
-    echo 'The "Always Free Autonomous Transaction Processing Instance Count" resource availability is insufficent to run this workshop.'
-    echo '1 instance is required.  Terminate some existing always free databases and try again.'
-    CHECK=0
-  fi
-
-  if test $CHECK -eq 1; then
-    state_set_done ATP_LIMIT_CHECK
-  else
-    read -p "Hit [RETURN] when you are ready to retry? " DUMMY
-  fi
+  state_set_done ATP_LIMIT_CHECK
 done
 
 # Home Region
