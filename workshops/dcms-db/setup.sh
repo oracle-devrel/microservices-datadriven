@@ -152,9 +152,9 @@ while ! state_done ATP_LIMIT_CHECK; do
 done
 
 # Home Region
-if ! state_done HOME_REGION; then
-  state_set HOME_REGION `oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output`
-fi
+#if ! state_done HOME_REGION; then
+#  state_set HOME_REGION `oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output`
+#fi
 
 # Request compartment details and create or validate
 if ! state_done COMPARTMENT_OCID; then

@@ -103,13 +103,13 @@ done
 
 
 # Double check and then set the region
-while ! state_done REGION; do
-  if test $(state_get RUN_TYPE) -eq 1; then
-    HOME_REGION=`oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output`
-    state_set HOME_REGION "$HOME_REGION"
-  fi
-  state_set REGION "$OCI_REGION" # Set in cloud shell env
-done
+#while ! state_done REGION; do
+#  if test $(state_get RUN_TYPE) -eq 1; then
+#    HOME_REGION=`oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output`
+#    state_set HOME_REGION "$HOME_REGION"
+#  fi
+#  state_set REGION "$OCI_REGION" # Set in cloud shell env
+#done
 
 
 # Create the compartment

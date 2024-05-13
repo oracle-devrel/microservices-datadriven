@@ -106,7 +106,7 @@ else
 fi
 
 # Home Region
-HOME_REGION=`oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output`
+#HOME_REGION=`oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output`
 
 # Request compartment details and create or validate
 if ! compartment-dialog 'OT' "$TENANCY_OCID" "$HOME_REGION" "GrabDish Workshop $RUN_NAME"; then
