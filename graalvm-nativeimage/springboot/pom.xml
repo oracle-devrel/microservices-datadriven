@@ -31,6 +31,7 @@
 			<artifactId>ucp11</artifactId>
 			<version>23.5.0.24.07</version>
 		</dependency>
+
 <!--		<dependency>-->
 <!--			<groupId>com.oracle.database.security</groupId>-->
 <!--			<artifactId>oraclepki</artifactId>-->
