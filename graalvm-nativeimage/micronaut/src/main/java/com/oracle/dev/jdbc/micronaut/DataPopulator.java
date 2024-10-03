@@ -49,10 +49,10 @@ public class DataPopulator {
     migrateDatabase();
 
     // clear out any existing data
-    thingRepository.deleteAll();
+   // thingRepository.deleteAll();
 
     // add sample data
-    populateTable();
+   // populateTable();
 
   }
 
