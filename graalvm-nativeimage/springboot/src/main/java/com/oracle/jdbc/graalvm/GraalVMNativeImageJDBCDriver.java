@@ -31,11 +31,9 @@ public class GraalVMNativeImageJDBCDriver {
 		try {
 			ods = new OracleDataSource();
 			//notice the servicename suffix appended, which can be _high, _low, ...
-//			ods.setURL("jdbc:oracle:thin:@${ATP Name}_high?TNS_ADMIN=/home/${MY_HOME_DIR}/myatpwallet");
-			ods.setURL("jdbc:oracle:thin:@ATP110345_high?TNS_ADMIN=/home/LL110345_U/myatpwallet");
+			ods.setURL("jdbc:oracle:thin:@${ATP Name}_high?TNS_ADMIN=/home/${MY_HOME_DIR}/myatpwallet");
 			ods.setUser("ADMIN");
-//			ods.setPassword("[ATP Admin Password]");
-			ods.setPassword("##03pRivvzR2q4jv");
+			ods.setPassword("[ATP Admin Password]");
 
 			Connection conn = ods.getConnection();
 			System.out.println("Oracle Database Connection:" + conn);
