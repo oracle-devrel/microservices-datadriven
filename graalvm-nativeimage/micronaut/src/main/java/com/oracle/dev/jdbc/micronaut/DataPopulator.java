@@ -9,10 +9,7 @@ import jakarta.inject.Singleton;
 
 import jakarta.transaction.Transactional;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 
 import javax.sql.DataSource;
@@ -75,10 +72,14 @@ public class DataPopulator {
   }
 
   private boolean checkTableExists(Connection connection) {
-    PreparedStatement stmt = connection.prepareStatement("SELECT 'Hello World!' FROM dual");
-    ResultSet resultSet = stmt.executeQuery();
-    while (resultSet.next()) {
-      System.out.println(resultSet.getString(1));
+    try {
+      PreparedStatement stmt = connection.prepareStatement("SELECT 'Hello World!' FROM dual");
+      ResultSet resultSet = stmt.executeQuery();
+      while (resultSet.next()) {
+        System.out.println(resultSet.getString(1));
+      } return true;
+    } catch (SQLException e) {
+      throw new RuntimeException("TABLE DOES NOT EXIST", e);
     }
 //    try (Statement statement = connection.createStatement();
 //        ResultSet resultSet = statement.executeQuery(QUERY)) {
