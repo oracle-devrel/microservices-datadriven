@@ -75,12 +75,17 @@ public class DataPopulator {
   }
 
   private boolean checkTableExists(Connection connection) {
-    try (Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(QUERY)) {
-      return resultSet.next();
-    } catch (SQLException e) {
-      throw new RuntimeException("TABLE DOES NOT EXIST", e);
+    PreparedStatement stmt = connection.prepareStatement("SELECT 'Hello World!' FROM dual");
+    ResultSet resultSet = stmt.executeQuery();
+    while (resultSet.next()) {
+      System.out.println(resultSet.getString(1));
     }
+//    try (Statement statement = connection.createStatement();
+//        ResultSet resultSet = statement.executeQuery(QUERY)) {
+//      return resultSet.next();
+//    } catch (SQLException e) {
+//      throw new RuntimeException("TABLE DOES NOT EXIST", e);
+//    }
   }
 
   public void populateTable() {

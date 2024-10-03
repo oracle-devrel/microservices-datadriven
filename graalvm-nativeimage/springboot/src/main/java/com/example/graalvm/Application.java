@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 @SpringBootApplication
-public class PaulpApplication {
+public class Application {
 
 	@Autowired
 	DataSource dataSource;
@@ -33,6 +33,6 @@ public class PaulpApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(PaulpApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }
