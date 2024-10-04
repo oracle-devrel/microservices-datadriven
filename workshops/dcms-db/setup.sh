@@ -148,25 +148,13 @@ done
 
 # Check "Always Free Autonomous Transaction Processing Instance Count" limit
 while ! state_done ATP_LIMIT_CHECK; do
-  CHECK=1
-  # ADB Always Free availability
-  if test $(oci limits resource-availability get --compartment-id="$(state_get TENANCY_OCID)" --service-name "database" --limit-name "adb-free-count" --query 'to_string(min([data."fractional-availability",`1.0`]))' --raw-output) != '1.0'; then
-    echo 'The "Always Free Autonomous Transaction Processing Instance Count" resource availability is insufficent to run this workshop.'
-    echo '1 instance is required.  Terminate some existing always free databases and try again.'
-    CHECK=0
-  fi
-
-  if test $CHECK -eq 1; then
-    state_set_done ATP_LIMIT_CHECK
-  else
-    read -p "Hit [RETURN] when you are ready to retry? " DUMMY
-  fi
+  state_set_done ATP_LIMIT_CHECK
 done
 
 # Home Region
-if ! state_done HOME_REGION; then
-  state_set HOME_REGION `oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output`
-fi
+#if ! state_done HOME_REGION; then
+#  state_set HOME_REGION `oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output`
+#fi
 
 # Request compartment details and create or validate
 if ! state_done COMPARTMENT_OCID; then
@@ -206,14 +194,14 @@ done
 
 # OCI Region
 while ! state_done OCI_REGION; do
-  if test -z "$OCI_REGION"; then
-    if test 1 -eq `oci iam region-subscription list --query 'length(data[])' --raw-output`; then
-      # Only one subcribed region so must be home region
-      OCI_REGION="$(state_get HOME_REGION)"
-    else
+#  if test -z "$OCI_REGION"; then
+#    if test 1 -eq `oci iam region-subscription list --query 'length(data[])' --raw-output`; then
+#      # Only one subcribed region so must be home region
+#      OCI_REGION="$(state_get HOME_REGION)"
+#    else
       read -p "Please enter the name of the region that you are connected to: " OCI_REGION
-    fi
-  fi
+#    fi
+#  fi
   state_set OCI_REGION "$OCI_REGION"
 done
 

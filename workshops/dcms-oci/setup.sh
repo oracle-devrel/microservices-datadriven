@@ -148,48 +148,18 @@ done
 
 # Check OKE Limits
 if ! state_done OKE_LIMIT_CHECK; then
-  # Cluster Service Limit
-  OKE_LIMIT=`oci limits value list --compartment-id "$(state_get TENANCY_OCID)" --service-name "container-engine" --query 'sum(data[?"name"=='"'cluster-count'"'].value)'`
-  if test "$OKE_LIMIT" -lt 1; then
-    echo 'The service limit for the "Container Engine" "Cluster Count" is insufficent to run this workshop.  At least 1 is required.'
-    exit
-  elif test "$OKE_LIMIT" -eq 1; then
-    echo 'You are limited to only one OKE cluster in this tenancy.  This workshop will create one additional OKE cluster and so any other OKE clusters must be terminated.'
-    if test -z "${TEST_USER_OCID-}"; then
-      read -p "Please confirm that no other un-terminated OKE clusters exist in this tenancy and then hit [RETURN]? " DUMMY
-    fi
-  fi
   state_set_done OKE_LIMIT_CHECK
 fi
 
 # Check ATP resource availability
 while ! state_done ATP_LIMIT_CHECK; do
-  CHECK=1
-  # ATP OCPU availability
-  if test $(oci limits resource-availability get --compartment-id="$(state_get TENANCY_OCID)" --service-name "database" --limit-name "atp-ocpu-count" --query 'to_string(min([data."fractional-availability",`4.0`]))' --raw-output) != '4.0'; then
-    echo 'The "Autonomous Transaction Processing OCPU Count" resource availability is insufficent to run this workshop.'
-    echo '4 OCPUs are required.  Terminate some existing ATP databases and try again.'
-    CHECK=0
-  fi
-
-  # ATP storage availability
-  if test $(oci limits resource-availability get --compartment-id="$(state_get TENANCY_OCID)" --service-name "database" --limit-name "atp-total-storage-tb" --query 'to_string(min([data."fractional-availability",`2.0`]))' --raw-output) != '2.0'; then
-    echo 'The "Autonomous Transaction Processing Total Storage (TB)" resource availability is insufficent to run this workshop.'
-    echo '2 TB are required.  Terminate some existing ATP databases and try again.'
-    CHECK=0
-  fi
-
-  if test $CHECK -eq 1; then
-    state_set_done ATP_LIMIT_CHECK
-  else
-    read -p "Hit [RETURN] when you are ready to retry? " DUMMY
-  fi
+  state_set_done ATP_LIMIT_CHECK
 done
 
 # Home Region
-if ! state_done HOME_REGION; then
-  state_set HOME_REGION `oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output`
-fi
+#if ! state_done HOME_REGION; then
+#  state_set HOME_REGION `oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output`
+#fi
 
 # Request compartment details and create or validate
 if ! state_done COMPARTMENT_OCID; then
@@ -234,14 +204,14 @@ done
 
 # OCI Region
 while ! state_done OCI_REGION; do
-  if test -z "$OCI_REGION"; then
-    if test 1 -eq `oci iam region-subscription list --query 'length(data[])' --raw-output`; then
-      # Only one subcribed region so must be home region
-      OCI_REGION="$(state_get HOME_REGION)"
-    else
+#  if test -z "$OCI_REGION"; then
+#    if test 1 -eq `oci iam region-subscription list --query 'length(data[])' --raw-output`; then
+#      # Only one subcribed region so must be home region
+#      OCI_REGION="$(state_get HOME_REGION)"
+#    else
       read -p "Please enter the name of the region that you are connected to: " OCI_REGION
-    fi
-  fi
+#    fi
+#  fi
   state_set OCI_REGION "$OCI_REGION"
 done
 

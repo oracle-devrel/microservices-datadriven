@@ -104,13 +104,13 @@ done
 
 
 # Double check and then set the region
-while ! state_done REGION; do
-  if test "$(state_get RUN_TYPE)" -eq 1; then
-    HOME_REGION=$(oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output)
-    state_set HOME_REGION "$HOME_REGION"
-  fi
-  state_set REGION "$OCI_REGION" # Set in cloud shell env.sh
-done
+#while ! state_done REGION; do
+#  if test "$(state_get RUN_TYPE)" -eq 1; then
+#    HOME_REGION=$(oci iam region-subscription list --query 'data[?"is-home-region"]."region-name" | join('\'' '\'', @)' --raw-output)
+#    state_set HOME_REGION "$HOME_REGION"
+#  fi
+#  state_set REGION "$OCI_REGION" # Set in cloud shell env.sh
+#done
 
 
 # Create the compartment
@@ -138,36 +138,12 @@ while ! state_done ATP_LIMIT_CHECK; do
   read -r -p "Do you want to use Always Free Autonomous Database Instance? (y/N) " ADB_FREE
   if [[ "$ADB_FREE" =~ ^([yY][eE][sS]|[yY])$ ]]
   then
-        # ATP Free Tier OCPU availability
-        if test $(oci limits resource-availability get --compartment-id="$OCI_TENANCY" --service-name "database" --limit-name "adb-free-count" --query 'to_string(min([data."fractional-availability",`1.0`]))' --raw-output) != '1.0'; then
-          echo 'The "Always Free Autonomous Database OCPU Count" resource availability is insufficient to run this workshop.'
-          echo '1 OCPUs are required.  Terminate some existing ADB FREE databases and try again.'
-          CHECK=0
-        else
-          state_set ADB_FREE true
-        fi
+        state_set ADB_FREE true
   else
-        # ATP OCPU availability
-        if test $(oci limits resource-availability get --compartment-id="$OCI_TENANCY" --service-name "database" --limit-name "atp-ocpu-count" --query 'to_string(min([data."fractional-availability",`1.0`]))' --raw-output) != '1.0'; then
-          echo 'The "Autonomous Transaction Processing OCPU Count" resource availability is insufficient to run this workshop.'
-          echo '1 OCPUs are required.  Terminate some existing ATP databases and try again.'
-          CHECK=0
-        fi
-
-        # ATP storage availability
-        if test $(oci limits resource-availability get --compartment-id="$OCI_TENANCY" --service-name "database" --limit-name "atp-total-storage-tb" --query 'to_string(min([data."fractional-availability",`1.0`]))' --raw-output) != '1.0'; then
-          echo 'The "Autonomous Transaction Processing Total Storage (TB)" resource availability is insufficient to run this workshop.'
-          echo '1 TB are required.  Terminate some existing ATP databases and try again.'
-          CHECK=0
-        fi
         state_set ADB_FREE false
   fi
 
-  if test $CHECK -eq 1; then
-    state_set_done ATP_LIMIT_CHECK
-  else
-    read -p "Hit [RETURN] when you are ready to retry? " DUMMY
-  fi
+  state_set_done ATP_LIMIT_CHECK
 done
 
 
