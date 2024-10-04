@@ -73,6 +73,7 @@ public class DataPopulator {
 
   private boolean checkTableExists(Connection connection) {
     try {
+      System.out.println("Connection is : " + connection);
       PreparedStatement stmt = connection.prepareStatement("SELECT 'Hello World!' FROM dual");
       ResultSet resultSet = stmt.executeQuery();
       while (resultSet.next()) {

@@ -64,6 +64,7 @@ public class TablesResource {
                                        + " FROM ALL_TABLES "
                                        + "ORDER BY TABLE_NAME ASC");
          ResultSet rs = ps.executeQuery()) {
+      System.out.println("Connection is : " + connection);
       while (rs.next()) {
         sb.append(rs.getString(1)).append("\n");
       }
