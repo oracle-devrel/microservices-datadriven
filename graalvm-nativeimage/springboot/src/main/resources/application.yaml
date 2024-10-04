@@ -4,9 +4,9 @@ spring:
 
   # Datasource Configuration
   datasource:
-    url: jdbc:oracle:thin:@ATP110513_tp?TNS_ADMIN=/home/LL110513_U/myatpwallet
+    url: jdbc:oracle:thin:@<ATP Name>_high?TNS_ADMIN=/home/<myhomedir>/myatpwallet
     username: ADMIN
-    password: ATP110513
+    password: <password>
     driver-class-name: oracle.jdbc.OracleDriver
     type: oracle.ucp.jdbc.PoolDataSource
     oracleucp:
