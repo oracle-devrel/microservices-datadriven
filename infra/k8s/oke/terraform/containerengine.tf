@@ -39,7 +39,7 @@ resource "oci_containerengine_node_pool" "okell_node_pool" {
   compartment_id     = var.ociCompartmentOcid
   kubernetes_version = var.kubernetes_version
   name               = "Pool"
-  node_shape         = "VM.Standard.E2.1"
+  node_shape         = "VM.Standard.E3.Flex"
   node_config_details {
     placement_configs {
       availability_domain = data.oci_identity_availability_domain.ad1.name
