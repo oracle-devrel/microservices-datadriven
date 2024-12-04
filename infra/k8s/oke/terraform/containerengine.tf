@@ -51,6 +51,12 @@ resource "oci_containerengine_node_pool" "okell_node_pool" {
     image_id    = local.oracle_linux_images.0 # Latest
     source_type = "IMAGE"
   }
+
+  node_shape_config {
+    memory_in_gbs = 16  # Specify the memory size in GBs
+    ocpus         = 1   # Specify the number of OCPUs
+  }
+
 }
 
 data "oci_containerengine_node_pool_option" "okell_node_pool_option" {

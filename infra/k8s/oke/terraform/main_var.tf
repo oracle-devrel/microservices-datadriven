@@ -9,5 +9,5 @@ variable "vcnOcid" {}
 variable "kubernetes_version" {
   description = "OKE Version"
   type        = string
-  default     = "v1.28.2"
+  default     = "v1.31.1"
 }
