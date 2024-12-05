@@ -24,5 +24,6 @@ while ! test -z "$DEPENDENCIES"; do
   DEPENDENCIES="$WAITING_FOR"
   sleep 1
 done
+state_set VCN_OCID "NA"
 echo "" > $OUTPUT_FILE
 state_set_done K8S_THREAD
