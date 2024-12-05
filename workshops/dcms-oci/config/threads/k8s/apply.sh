@@ -26,4 +26,4 @@ while ! test -z "$DEPENDENCIES"; do
 done
 state_set VCN_OCID "NA"
 echo "" > $OUTPUT_FILE
-state_set_done K8S_THREAD
+#state_set_done K8S_THREAD
