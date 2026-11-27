@@ -2,22 +2,9 @@
 
 [![License: UPL](https://img.shields.io/badge/license-UPL-green)](https://img.shields.io/badge/license-UPL-green) [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=oracle-devrel_microservices-datadriven)](https://sonarcloud.io/dashboard?id=oracle-devrel_microservices-datadriven)
 
-## THIS IS A NEW, BLANK REPO THAT IS NOT READY FOR USE YET.  PLEASE CHECK BACK SOON!
+## The microservices-datadriven project's retail application, aka "GrabDish", has moved to https://github.com/paulparkinson/oracle-ai-for-sustainable-dev/tree/main/retail 
 
-## Introduction
-MISSING
-
-## Getting Started
-MISSING
-
-### Prerequisites
-MISSING
-
-## Notes/Issues
-MISSING
-
-## URLs
-* Nothing at this time
+## The graalvm-native-image src remains here but will be moved to the new repo in due course.
 
 ## Contributing
 This project is open source.  Please submit your contributions by forking this repository and submitting a pull request!  Oracle appreciates any contributions that are made by the open source community.
