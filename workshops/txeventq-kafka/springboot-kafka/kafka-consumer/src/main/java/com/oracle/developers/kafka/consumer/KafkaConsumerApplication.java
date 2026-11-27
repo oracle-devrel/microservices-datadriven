@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.kafka.core.KafkaOperations;
 import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
-import org.springframework.kafka.listener.SeekToCurrentErrorHandler;
+import org.springframework.kafka.listener.DefaultErrorHandler;
 import org.springframework.util.backoff.FixedBackOff;
 
 @SpringBootApplication
@@ -26,8 +26,8 @@ public class KafkaConsumerApplication {
      * Boot will autowire this into the container factory.
      */
     @Bean
-    public SeekToCurrentErrorHandler errorHandler(KafkaOperations<Object, Object> template) {
-        return new SeekToCurrentErrorHandler(
+    public DefaultErrorHandler errorHandler(KafkaOperations<Object, Object> template) {
+        return new DefaultErrorHandler(
                 new DeadLetterPublishingRecoverer(template), new FixedBackOff(1000L, 2));
     }
 }
